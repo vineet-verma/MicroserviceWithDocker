@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.ihsmarkit.shsvc.razor</groupId>
+	<artifactId>razor-polling-service</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
+
+	<parent>
+		<groupId>com.ihsmarkit.shsvc</groupId>
+		<artifactId>markit-parent</artifactId>
+		<!--<version>1.0.10</version>-->
+		<version>2.0.8-SNAPSHOT</version>
+	</parent>
+
+	<name>razor-polling-service</name>
+	<description>Demo project for Spring Boot</description>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<java.version>1.8</java.version>
+		<aws.version>1.11.586</aws.version>
+	</properties>
+
+	<dependencies>
+
+		<dependency>
+			<groupId>com.ihsmarkit.shsvc</groupId>
+			<artifactId>markit-security-autoconfiguration</artifactId>
+			<version>1.0.9.1-SNAPSHOT</version>
+			<exclusions>
+				<exclusion>
+					<groupId>com.markit.mcs</groupId>
+					<artifactId>identity-access-token-encpwd-java</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<!--<dependency>
+			<groupId>com.markit.mcs</groupId>
+			<artifactId>identity-access-token-encpwd-java</artifactId>
+			<version>1.2.2</version>
+		</dependency>-->
+
+		<dependency>
+			<groupId>com.amazonaws</groupId>
+			<artifactId>aws-java-sdk-kinesis</artifactId>
+			<version>${aws.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-logging</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-commons</artifactId>
+			<version>2.0.9.RELEASE</version>
+		</dependency>
+
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+			<optional>true</optional>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.18.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.ihsmarkit.shsvc.mcs</groupId>
+			<artifactId>markit-docrepository-javaclient</artifactId>
+			<version>2.3.1-SNAPSHOT</version>
+		</dependency>
+
+		<!--<dependency>-->
+			<!--<groupId>com.ihsmarkit.razor</groupId>-->
+			<!--<artifactId>razor-zeebe-core-lib</artifactId>-->
+			<!--<version>0.1.4-SNAPSHOT</version>-->
+		<!--</dependency>-->
+
+		<dependency>
+			<groupId>com.ihsmarkit.shsvc</groupId>
+			<artifactId>access-control-core</artifactId>
+			<version>1.0.5-SNAPSHOT</version>
+			<exclusions>
+				<exclusion>
+					<groupId>com.ihsmarkit.shsvc</groupId>
+					<artifactId>markit-security-autoconfiguration</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>com.ihsmarkit.shsvc.common</groupId>
+			<artifactId>constants</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20180813</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.8.5</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.ihsmarkit.shsvc</groupId>
+			<artifactId>aws-xray-boot-starter</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.amazonaws</groupId>
+			<artifactId>aws-xray-recorder-sdk-apache-http</artifactId>
+			<version>2.4.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.amazonaws</groupId>
+			<artifactId>aws-java-sdk</artifactId>
+			<version>${aws.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>redis.clients</groupId>
+			<artifactId>jedis</artifactId>
+			<version>3.0.1</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+
+	</dependencies>
+
+	<build>
+		<finalName>${project.artifactId}</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.8.1</version>
+				<configuration>
+					<destFile>${sonar.jacoco.reportPath}</destFile>
+					<!--<append>true</append>-->
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>report</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>jacoco-check</id>
+						<goals>
+							<goal>check</goal>
+						</goals>
+						<configuration>
+							<rules>
+								<rule>
+									<element>PACKAGE</element>
+									<limits>
+										<limit>
+											<counter>LINE</counter>
+											<value>COVEREDRATIO</value>
+											<minimum>0.0</minimum>
+										</limit>
+									</limits>
+								</rule>
+							</rules>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.sonarsource.scanner.maven</groupId>
+				<artifactId>sonar-maven-plugin</artifactId>
+				<version>3.5.0.1254</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.12.4</version>
+				<configuration>
+					<skipTests>true</skipTests>
+					<properties>
+						<property>
+							<name>listener</name>
+							<value>org.sonar.java.jacoco.JUnitListener</value>
+						</property>
+					</properties>
+				</configuration>
+			</plugin>
+
+			<!--<plugin>-->
+				<!--<groupId>org.whitesource</groupId>-->
+				<!--<artifactId>whitesource-maven-plugin</artifactId>-->
+				<!--<version>18.10.2.1</version>-->
+				<!--<executions>-->
+					<!--<execution>-->
+						<!--<phase>verify</phase>-->
+						<!--<goals>-->
+							<!--<goal>update</goal>-->
+						<!--</goals>-->
+					<!--</execution>-->
+				<!--</executions>-->
+				<!--<configuration>-->
+					<!--<product>shsvc-dev</product>-->
+					<!--<wssUrl>https://saas.whitesourcesoftware.com/agent</wssUrl>-->
+					<!--<orgToken>522bb5f3adc745e3837772daa63c768dd6f0d496422d42ee9b29e9e41fdd2add</orgToken>-->
+					<!--<userKey>f954a5977e9441a886335ae226edbe34137d175dd6034e639e1e59d49d342b5a</userKey>-->
+				<!--</configuration>-->
+			<!--</plugin>-->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.22.1</version>
+				<configuration>
+					<useSystemClassLoader>false</useSystemClassLoader>
+				</configuration>
+			</plugin>
+			<!--<plugin>-->
+			<!--<groupId>org.apache.maven.plugins</groupId>-->
+			<!--<artifactId>maven-surefire-plugin</artifactId>-->
+			<!--<version>2.12.4</version>-->
+			<!--<configuration>-->
+			<!--<properties>-->
+			<!--<property>-->
+			<!--<name>listener</name>-->
+			<!--<value>org.sonar.java.jacoco.JUnitListener</value>-->
+			<!--</property>-->
+			<!--</properties>-->
+			<!--</configuration>-->
+			<!--</plugin>-->
+		</plugins>
+	</build>
+
+
+
+</project>

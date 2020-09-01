@@ -1,0 +1,5 @@
+2020-04-07 10:36:08.616  INFO 15116 --- [pool-9-thread-1] .i.r.l.PollingServiceValueChangeListener : Received change request for enabled - false
+2020-04-07 10:36:08.676  INFO 15116 --- [pool-7-thread-1] c.i.r.a.AccessTokenProviderClient        : Call ping at https://sam.samexternal.net/sso/oauth2/access_token
+2020-04-07 10:36:08.690 ERROR 15116 --- [pool-9-thread-1] c.i.r.e.cached.RedisConfigCacheImpl      : Unable to put value to redis for key enabled    - Error: java.net.SocketException: Connection reset by peer: socket write error 
+2020-04-07 10:36:08.692  INFO 15116 --- [pool-9-thread-1] c.i.r.semaphore.ManagedWorkerSemaphore   : Suspending all Worker Threads : 0 ----------------
+2020-04-07 10:36:08.694  INFO 15116 --- [pool-9-thread-1] c.i.razor.service.PollingEngineService   : Reset toggling Polling feature - false

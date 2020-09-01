@@ -1,0 +1,177 @@
+server:
+  port: 8080
+
+
+spring:
+  main:
+    allow-bean-definition-overriding: true
+    banner-mode: "off"
+  jackson:
+    default-property-inclusion: NON_NULL
+  servlet:
+    multipart:
+      max-file-size: ${MULTIPART_MAX_FILE_SIZE}
+      max-request-size: ${MULTIPART_MAX_REQUEST_SIZE}
+  jms:
+    cache:
+      enabled: false
+  devtools:
+    add-properties: false
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  health:
+    jms:
+      enabled: false
+    elasticsearch:
+      enabled: false
+
+auth:
+  applicationName: ${AUTH_APPLICATION_NAME}
+  server: ${AUTH_SERVER}
+  security: ${AUTH_SECURITY_ENABLED}
+
+jwt:
+  userId: userid
+  bearer: bearer
+  authorizationHeader: Authorization
+  alternateUserClaim: client_id
+
+markit:
+  auth:
+    authentication: ${AUTH_SECURITY_ENABLED}
+    authorization: ${AUTH_AUTHORIZATION_ENABLED}
+    excludePaths: /actuator/**
+
+ihsmarkit:
+  aws:
+    xray:
+      enabled: true
+      segment-name: razorpoll
+      daemon-address: localhost:2000
+      enable-ecs-plugin: false
+      url-patterns:
+        - /document/*
+        - /bulk/*
+        - /search/*
+        - /statistic/*
+  docrepo:
+    download:
+      location: /var/docrepo/files
+  docrepository:
+    param-bucket-id: bucketId
+    param-document: document
+    param-file-name: fileName
+    param-file-path: filePath
+    param-product-id: productId
+    param-tags: tags
+    param-id: id
+    param-version-id: versionId
+    param-doc-exists: fetchDocError
+
+token:
+  provider:
+    scopes: "openid profile razor:read razor:write"
+    clientId: ${TOKEN_CLIENT_ID}
+    clientSecret: ${TOKEN_CLIENT_SECRET}
+    url: https://identity.svcs.mdevlab.com/identity
+    tokenEndPoint: ${PING_TOKEN_ENDPOINT}
+    user:
+    pwd:
+    keyUrl:
+
+tracker:
+  aws:
+    region: us-east-1
+#    accessKey: ${AWS_ACCESS_KEY_ID}
+#    secretKey: ${AWS_SECRET_KEY}
+    kinesisStreamName: ${KINESIS_STREAM}
+    exportStreamEnabled: ${KINESIS_STREAM_ENABLED}
+
+document:
+  source:
+    url: ${DATA_SOURCE_URL}
+    username: ${DATA_SOURCE_USERNAME}
+    password: ${DATA_SOURCE_PASSWORD}
+    tags: ${DOCUMENT_SOURCE_TAGS}
+  upload:
+    pipeline:
+      context: ${PIPELINE_CONTEXT}
+  workflow:
+    id: ${PIPELINE_WORKFLOW_ID}
+  server:
+    base:
+      path: ${DOC_REP_BASE_PATH}
+
+worker:
+  thread:
+    count: ${WORKER_THREAD_COUNT}
+    permit: ${WORKER_PERMIT_COUNT}
+  maxAvailable:
+    permits: ${WORKER_PERMIT_COUNT}
+  seed:
+    permits: ${WORKER_SEED_PERMITS}
+  permits:
+    delta: ${WORKER_PERMITS_DELTA}
+    interval: ${WORKER_PERMITS_GROWTH_INTERVAL}
+
+response:
+  wait:
+    time: ${NO_RESPONSE_WAIT_TIME}
+  failed:
+    retry:
+      attempts: ${DOWN_STREAM_SERVICE_FAIL_RE_ATTEMPTS}
+      minWaitTimeRange: ${SERVICE_FAIL_RE_TRY_MIN_WAIT_TIME_RANGE}
+      maxWaitTimeRange: ${SERVICE_FAIL_RE_TRY_MAX_WAIT_TIME_RANGE}
+
+externalconfig:
+  db:
+    tablenameprefix: dev2
+    application: polling-service
+  cache:
+    redis:
+      channel-pattern: polling-service
+      #endpoint: 127.0.0.1
+      endpoint: razor-external-conf.ad8smc.ng.0001.use1.cache.amazonaws.com
+
+AUTH_APPLICATION_NAME: markit-auth
+AUTH_SERVER: https://identity.svcs.ihsmarkit.io/api/
+AUTH_SECURITY_ENABLED: true
+AUTH_AUTHORIZATION_ENABLED: true
+MULTIPART_MAX_FILE_SIZE: 5000000KB
+MULTIPART_MAX_REQUEST_SIZE: 5000000KB
+#AWS_ACCESS_KEY_ID: AKIAJ5CZW2J5FN4MLOOQ
+#AWS_SECRET_KEY: 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
+AWS_REGION: us-east-1
+TRACKER_URL: https://docs-dev.svcs.mdevlab.com/activity/v1
+KINESIS_STREAM: rzr-polling-service-stream
+KINESIS_STREAM_ENABLED: true
+
+S3_BUCKET_NAME: docrepo-dev2
+
+DATA_SOURCE_URL: https://7m9hoqesdb.execute-api.us-east-1.amazonaws.com/stage
+DATA_SOURCE_USERNAME: RazorOCRUAT
+DATA_SOURCE_PASSWORD: RazorUAT2019$
+
+PIPELINE_CONTEXT: "{ \"force\": false, \"notifyLambdaFunction\":\"razor-pipeline-notification-handler\" }"
+DOC_REP_BASE_PATH: https://docsvcs-d1.svcs.mdevlab.com/docrep/v2
+WORKER_THREAD_COUNT: 200
+WORKER_PERMIT_COUNT: 10
+WORKER_SEED_PERMITS: 5
+WORKER_PERMITS_DELTA: 5
+WORKER_PERMITS_GROWTH_INTERVAL: 2
+
+NO_RESPONSE_WAIT_TIME: 120
+PIPELINE_WORKFLOW_ID: fieldExtractor_NM
+
+DOWN_STREAM_SERVICE_FAIL_RE_ATTEMPTS: 5
+SERVICE_FAIL_RE_TRY_MIN_WAIT_TIME_RANGE: 20
+SERVICE_FAIL_RE_TRY_MAX_WAIT_TIME_RANGE: 90
+
+TOKEN_CLIENT_ID: NOTICEMANAGER_RAZOR_TEST
+TOKEN_CLIENT_SECRET: secret
+PING_TOKEN_ENDPOINT: https://ping.ihsmhosting.com/as/token.oauth2
+DOCUMENT_SOURCE_TAGS: notice_manager

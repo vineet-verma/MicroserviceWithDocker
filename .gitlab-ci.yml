@@ -1,0 +1,9 @@
+image: docker-registry-eu.mdevlab.com/images/maven-builder:ecr-build-jfrog
+
+build:
+  stage: build
+  script:
+  #- mvn -Psonar verify sonar:sonar
+  - mvn clean install -B
+  - mvn deploy -B
+  - (/usr/bin/ecr_build_push rzr-polling-service "101663181665.dkr.ecr.us-east-1.amazonaws.com/rzr-polling-service" `cat target/maven-archiver/pom.properties | grep version | cut -d= -f2`)
